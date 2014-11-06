@@ -1,0 +1,2 @@
+module SpotMessagesHelper
+end

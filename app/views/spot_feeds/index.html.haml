@@ -1,0 +1,31 @@
+%h1 Listing spot_feeds
+
+%table
+  %tr
+    %th Feed
+    %th Name
+    %th Description
+    %th Status
+    %th Usage
+    %th Days range
+    %th Detailed message show
+    %th
+    %th
+    %th
+
+  - @spot_feeds.each do |spot_feed|
+    %tr
+      %td= spot_feed.feed_id
+      %td= spot_feed.name
+      %td= spot_feed.description
+      %td= spot_feed.status
+      %td= spot_feed.usage
+      %td= spot_feed.days_range
+      %td= spot_feed.detailed_message_show
+      %td= link_to 'Show', spot_feed
+      %td= link_to 'Edit', edit_spot_feed_path(spot_feed)
+      %td= link_to 'Destroy', spot_feed, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Spot feed', new_spot_feed_path

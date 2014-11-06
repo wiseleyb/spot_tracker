@@ -11,7 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105152031) do
+ActiveRecord::Schema.define(version: 20141106125510) do
+
+  create_table "spot_feeds", force: true do |t|
+    t.string   "feed_id"
+    t.string   "name"
+    t.string   "description"
+    t.string   "status"
+    t.integer  "usage"
+    t.integer  "days_range"
+    t.boolean  "detailed_message_shown"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "spot_feeds", ["feed_id"], name: "index_spot_feeds_on_feed_id", unique: true
+
+  create_table "spot_messages", force: true do |t|
+    t.integer  "spot_feed_id"
+    t.integer  "spot_id"
+    t.string   "messenger_id"
+    t.string   "messenger_name"
+    t.integer  "unix_time"
+    t.string   "message_type"
+    t.decimal  "latitude",        precision: 10, scale: 6
+    t.decimal  "longitude",       precision: 10, scale: 6
+    t.string   "model_id"
+    t.string   "show_custom_msg"
+    t.datetime "date_time"
+    t.integer  "hidden"
+    t.string   "message_content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "spot_messages", ["spot_feed_id"], name: "index_spot_messages_on_spot_feed_id"
+  add_index "spot_messages", ["spot_id"], name: "index_spot_messages_on_spot_id", unique: true
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

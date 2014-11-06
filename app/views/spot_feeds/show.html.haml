@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Feed:
+  = @spot_feed.feed_id
+%p
+  %b Name:
+  = @spot_feed.name
+%p
+  %b Description:
+  = @spot_feed.description
+%p
+  %b Status:
+  = @spot_feed.status
+%p
+  %b Usage:
+  = @spot_feed.usage
+%p
+  %b Days range:
+  = @spot_feed.days_range
+%p
+  %b Detailed message show:
+  = @spot_feed.detailed_message_show
+
+= link_to 'Edit', edit_spot_feed_path(@spot_feed)
+\|
+= link_to 'Back', spot_feeds_path

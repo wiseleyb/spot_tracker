@@ -1,0 +1,43 @@
+%h1 Listing spot_messages
+
+%table
+  %tr
+    %th Spot feed
+    %th Spot
+    %th Messenger
+    %th Messenger name
+    %th Unix time
+    %th Message type
+    %th Latitude
+    %th Longitude
+    %th Model
+    %th Show custom msg
+    %th Date time
+    %th Hidden
+    %th Message content
+    %th
+    %th
+    %th
+
+  - @spot_messages.each do |spot_message|
+    %tr
+      %td= spot_message.spot_feed_id
+      %td= spot_message.spot_id
+      %td= spot_message.messenger_id
+      %td= spot_message.messenger_name
+      %td= spot_message.unix_time
+      %td= spot_message.message_type
+      %td= spot_message.latitude
+      %td= spot_message.longitude
+      %td= spot_message.model_id
+      %td= spot_message.show_custom_msg
+      %td= spot_message.date_time
+      %td= spot_message.hidden
+      %td= spot_message.message_content
+      %td= link_to 'Show', spot_message
+      %td= link_to 'Edit', edit_spot_message_path(spot_message)
+      %td= link_to 'Destroy', spot_message, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Spot message', new_spot_message_path

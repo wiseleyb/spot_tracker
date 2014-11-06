@@ -7,3 +7,5 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 user = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << user.email
+
+Importer.new(xml: Importer.load_sample_xml).load

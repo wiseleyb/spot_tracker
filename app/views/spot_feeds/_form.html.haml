@@ -1,0 +1,14 @@
+= simple_form_for(@spot_feed) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :feed_id
+    = f.input :name
+    = f.input :description
+    = f.input :status
+    = f.input :usage
+    = f.input :days_range
+    = f.input :detailed_message_show
+
+  .form-actions
+    = f.button :submit

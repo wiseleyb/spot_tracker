@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+  <feedMessageResponse>
+    <count>10</count>
+    <feed>
+      <id>03XHH0sPyTiYUsYD2TVJ4q7CzEH89HBhG</id>
+      <name>OneAtATime</name>
+      <description>OneAtATime</description>
+      <status>ACTIVE</status>
+      <usage>0</usage>
+      <daysRange>7</daysRange>
+      <detailedMessageShown>true</detailedMessageShown>
+    </feed>
+    <totalCount>10</totalCount>
+    <activityCount>0</activityCount>
+    <messages>
+      <message clientUnixTime="0">
+        <id>4937065</id>
+        <messengerId>0-8356068</messengerId>
+        <messengerName>Spot2</messengerName>
+        <unixTime>1364909292</unixTime>
+        <messageType>HELP-CANCEL</messageType>
+        <latitude>-99999.0</latitude>
+        <longitude>-99999.0</longitude>
+        <modelId>SPOT2</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2013-04-02T06:28:12-0700</dateTime>
+        <hidden>0</hidden>
+        <messageContent>The help message has been cancelled</messageContent>
+      </message>
+      <message clientUnixTime="0">
+        <id>4937064</id>
+        <messengerId>0-8356068</messengerId>
+        <messengerName>Spot2</messengerName>
+        <unixTime>1364909283</unixTime>
+        <messageType>HELP</messageType>
+        <latitude>45.43249</latitude>
+        <longitude>-111.63832</longitude>
+        <modelId>SPOT2</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2013-04-02T06:28:03-0700</dateTime>
+        <hidden>0</hidden>
+        <messageContent>This is the default HELP message. Please update.</messageContent>
+      </message>
+      <message clientUnixTime="0">
+        <id>4937060</id>
+        <messengerId>0-8356068</messengerId>
+        <messengerName>Spot2</messengerName>
+        <unixTime>1364908774</unixTime>
+        <messageType>CUSTOM</messageType>
+        <latitude>45.44249</latitude>
+        <longitude>-111.64832</longitude>
+        <modelId>SPOT2</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2013-04-02T06:19:34-0700</dateTime>
+        <hidden>0</hidden>
+        <messageContent>This is a custom message</messageContent>
+      </message>
+      <message clientUnixTime="0">
+        <id>4937059</id>
+        <messengerId>0-8356068</messengerId>
+        <messengerName>Spot2</messengerName>
+        <unixTime>1364908765</unixTime>
+        <messageType>OK</messageType>
+        <latitude>45.45249</latitude>
+        <longitude>-111.65832</longitude>
+        <modelId>SPOT2</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2013-04-02T06:19:25-0700</dateTime>
+        <hidden>0</hidden>
+        <messageContent>This is the default SPOT Check-in/OK message. Please update.</messageContent>
+      </message>
+      <message clientUnixTime="0">
+        <id>4937057</id>
+        <messengerId>0-8356068</messengerId>
+        <messengerName>Spot2</messengerName>
+        <unixTime>1364908512</unixTime>
+        <messageType>TRACK</messageType>
+        <latitude>45.46249</latitude>
+        <longitude>-111.66832</longitude>
+        <modelId>SPOT2</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2013-04-02T06:15:12-0700</dateTime>
+        <hidden>0</hidden>
+      </message>
+    </messages>
+  </feedMessageResponse>
+</response>

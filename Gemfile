@@ -16,6 +16,11 @@ gem 'high_voltage'
 gem 'simple_form'
 gem 'thin'
 gem 'upmin-admin'
+
+gem 'gmaps4rails'
+gem 'nokogiri'
+gem 'underscore-rails'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
@@ -23,6 +28,7 @@ group :development do
   gem 'quiet_assets'
   gem 'rails_layout'
 end
+
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
@@ -31,10 +37,12 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'sqlite3'
 end
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
+
 group :test do
   gem 'capybara'
   gem 'database_cleaner'

@@ -1,0 +1,2 @@
+module SpotFeedsHelper
+end
