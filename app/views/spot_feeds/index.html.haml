@@ -10,6 +10,7 @@
     %th Days range
     %th Detailed message shown
     %th Sync
+    %th Sync Status
     %th
     %th
     %th
@@ -24,6 +25,7 @@
       %td= spot_feed.days_range
       %td= spot_feed.detailed_message_shown
       %td= spot_feed.sync
+      %td= spot_feed.sync_status
       %td= link_to 'Show', spot_feed
       %td= link_to 'Edit', edit_spot_feed_path(spot_feed)
       %td= link_to 'Destroy', spot_feed, :method => :delete, :data => { :confirm => 'Are you sure?' }

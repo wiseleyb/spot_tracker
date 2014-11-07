@@ -26,6 +26,10 @@
   %b Sync
   = @spot_feed.sync
 
+%p
+  %b Sync Status
+  = @spot_feed.sync_status
+
 = link_to 'Edit', edit_spot_feed_path(@spot_feed)
 \|
 = link_to 'Back', spot_feeds_path
