@@ -22,6 +22,10 @@
   %b Detailed message show:
   = @spot_feed.detailed_message_shown
 
+%p
+  %b Sync
+  = @spot_feed.sync
+
 = link_to 'Edit', edit_spot_feed_path(@spot_feed)
 \|
 = link_to 'Back', spot_feeds_path
