@@ -1,22 +1,34 @@
+require 'open-uri'
+
 # Imports feeds from spot
 class Importer
 
-  attr_accessor :xml, :xdoc, :url
+  attr_accessor :spot_feed, :xml, :xdoc, :url
 
-  def initialize(xml: nil, url: nil)
-    if xml && url
-      raise 'Only init Importer with xml OR url'
-    end
+  def initialize(spot_feed: nil, xml: nil, url: nil)
+    # TODO: clean this hackity hack crap up
 
+    @spot_feed = spot_feed
     @xml = xml
     @url = url
+
+    if @spot_feed
+      @xdoc = Importer.load_url(@spot_feed.feed_url)
+    end
 
     if @xml
       @xdoc = Importer.load_xml(@xml)
     end
 
-    if @uri
-      # TODO
+    if @url
+      @xdoc = Importer.load_url(@url)
+    end
+
+    if self.error?
+      if @spot_feed
+        @spot_feed.update_attributes(sync_status: self.error_message)
+      end
+      raise "Import failed: #{self.error_message}"
     end
   end
 
@@ -86,13 +98,36 @@ class Importer
     doc.xpath(field).first.try(:text)
   end
 
+  def error?
+    !@xdoc.xpath('//error').empty?
+  end
+
+  def error_message
+    # TODO: We should have a import log
+    error = @xdoc.xpath('//error')
+    [get_text(error, 'code'),
+     get_text(error, 'text'),
+     get_text(error, 'description')].join(' ')
+  end
+
   class << self
+    def import_feeds
+      SpotFeed.syncable.each do |sf|
+        Importer.new(spot_feed: sf).import rescue 'Import failed'
+        sleep 5 # required by spot api
+      end
+    end
+
     def load_sample_xml
       File.open('data/sample-spot-data.xml').read
     end
 
     def load_xml(xml)
       Nokogiri::XML(xml)
+    end
+
+    def load_url(url)
+      Nokogiri::HTML(open(url))
     end
   end
 end
