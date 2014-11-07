@@ -32,6 +32,33 @@ class Importer
     end
   end
 
+  class << self
+    def import_feeds
+      SpotFeed.syncable.each do |sf|
+        Importer.new(spot_feed: sf).import #rescue 'Import failed'
+        sf.update_attributes(sync_status: 'SUCCESS')
+        sleep 5 # required by spot api
+      end
+    end
+
+    def load_sample_xml
+      File.open('data/sample-spot-data.xml').read
+    end
+
+    def load_xml(xml)
+      Nokogiri::XML(xml)
+    end
+
+    def load_url(url)
+      Nokogiri::HTML(open(url))
+    end
+  end
+
+  def import
+    self.load_spot_feed
+    self.load_messages
+  end
+
   def messages
     @xdoc.xpath('//message')
   end
@@ -59,9 +86,12 @@ class Importer
     nil
   end
 
+  def messages
+    @messages ||= @xdoc.xpath('//message')
+  end
+
   def load_messages
-    if (sf = spot_feed_from_xdoc) &&
-       (messages = @xdoc.xpath('//message'))
+    if (sf = spot_feed_from_xdoc) && !messages.empty?
       res = []
       messages.each do |msg|
         spot_id = get_text(msg, 'id').to_i
@@ -95,7 +125,7 @@ class Importer
   end
 
   def get_text(doc, field)
-    doc.xpath(field).first.try(:text)
+    doc.xpath(field.downcase).first.try(:text)
   end
 
   def error?
@@ -108,26 +138,5 @@ class Importer
     [get_text(error, 'code'),
      get_text(error, 'text'),
      get_text(error, 'description')].join(' ')
-  end
-
-  class << self
-    def import_feeds
-      SpotFeed.syncable.each do |sf|
-        Importer.new(spot_feed: sf).import rescue 'Import failed'
-        sleep 5 # required by spot api
-      end
-    end
-
-    def load_sample_xml
-      File.open('data/sample-spot-data.xml').read
-    end
-
-    def load_xml(xml)
-      Nokogiri::XML(xml)
-    end
-
-    def load_url(url)
-      Nokogiri::HTML(open(url))
-    end
   end
 end

@@ -23,17 +23,18 @@
     handler.fitMapToBounds();
   });
   */
-    <% messages = SpotFeed.first.spot_messages.mappable %>
+  <% sf = SpotFeed.last %>
+  <% messages = sf.spot_messages.mappable %>
   function initialize() {
     var mapOptions = {
       zoom: 8,
-      center: new google.maps.LatLng(<%=messages.first.latitude%>,
-                                     <%=messages.first.longitude%>),
+      center: new google.maps.LatLng(<%= messages.first.latitude %>,
+                                     <%= messages.first.longitude %>),
       mapTypeId: google.maps.MapTypeId.TERRAIN
     };
 
     var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    var json = '<%=SpotFeed.first.path_json%>';
+    var json = '<%= sf.path_json %>';
     var pathCoordinates = [];
     $.each($.parseJSON(json), function(idx, obj) {
       pathCoordinates.push(new google.maps.LatLng(obj.lat, obj.lng));
