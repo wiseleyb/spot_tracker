@@ -1,8 +1,17 @@
 class SpotFeed < ActiveRecord::Base
   has_many :spot_messages, dependent: :destroy
 
+  scope :syncable, -> {
+    where(sync: true).where('updated_at < ?', 5.minutes.ago)
+  }
+
+  def feed_url
+    'https://api.findmespot.com/spot-main-web/consumer/rest-api/2.0/' +
+    "public/feed/#{feed_id}/message.xml"
+  end
+
   def markers_json
-    Gmaps4rails.build_markers spot_messages.mapable do |msg, marker|
+    Gmaps4rails.build_markers spot_messages.mappable do |msg, marker|
       marker.lat msg.latitude.to_f
       marker.lng msg.longitude.to_f
       #marker.infowindow render_to_string(:partial => "/users/my_template", :locals => { :object => user}).gsub(/\n/, '').gsub(/"/, '\"')
@@ -17,7 +26,7 @@ class SpotFeed < ActiveRecord::Base
   end
 
   def path_json
-    spot_messages.mapable.map do |m|
+    spot_messages.mappable.map do |m|
       {
         lat: m.latitude,
         lng: m.longitude
