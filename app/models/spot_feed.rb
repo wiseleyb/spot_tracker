@@ -15,4 +15,25 @@ class SpotFeed < ActiveRecord::Base
       marker.json({ :id => msg.id })
     end.to_json.html_safe
   end
+
+  def path_json
+    spot_messages.mapable.map do |m|
+      {
+        lat: m.latitude,
+        lng: m.longitude
+      }
+    end.to_json.html_safe
+  end
+
+  def test_large_json
+    res = []
+    1000.times do
+      res << {lat: range(24, 49), lng: range(-124, -66)}
+    end
+    res.to_json.html_safe
+  end
+
+  def range (min, max)
+    rand * (max-min) + min
+  end
 end

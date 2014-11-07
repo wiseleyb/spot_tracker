@@ -7,8 +7,8 @@ class CreateSpotMessages < ActiveRecord::Migration
       t.string    :messenger_name
       t.integer   :unix_time
       t.string    :message_type
-      t.decimal   :latitude,  {:precision=>10, :scale=>6}
-      t.decimal   :longitude, {:precision=>10, :scale=>6}
+      t.float     :latitude
+      t.float     :longitude
       t.string    :model_id
       t.string    :show_custom_msg
       t.datetime  :date_time

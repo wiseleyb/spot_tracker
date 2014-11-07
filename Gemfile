@@ -19,6 +19,7 @@ gem 'upmin-admin'
 
 gem 'gmaps4rails'
 gem 'nokogiri'
+gem 'pg'
 gem 'underscore-rails'
 
 group :development do
@@ -35,11 +36,11 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'rspec-rails'
-  gem 'sqlite3'
+#  gem 'sqlite3'
 end
 
 group :production do
-  gem 'pg'
+#  gem 'pg'
   gem 'rails_12factor'
 end
 
