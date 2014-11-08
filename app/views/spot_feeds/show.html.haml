@@ -30,6 +30,20 @@
   %b Sync Status
   = @spot_feed.sync_status
 
+%p
+  %b Created At
+  = @spot_feed.created_at.to_s(:short)
+
+%p
+  %b Updated At
+  = @spot_feed.updated_at.to_s(:short)
+
+%p
+  %b Spot Messages
+  = @spot_feed.spot_messages.count
+
 = link_to 'Edit', edit_spot_feed_path(@spot_feed)
 \|
 = link_to 'Back', spot_feeds_path
+\|
+= link_to 'Import Latest', import_spot_feed_path(@spot_feed)

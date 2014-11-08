@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :spot_feeds
+  resources :spot_feeds do
+    member do
+      get 'import'
+    end
+  end
 
   resources :spot_messages
 

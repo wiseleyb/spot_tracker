@@ -80,6 +80,7 @@ class Importer
       sf.usage = get_text(feed, 'usage').to_i
       sf.days_range = get_text(feed, 'daysRange')
       sf.detailed_message_shown = get_text(feed, 'detailedMessageShown') == 'true'
+      sf.updated_at = Time.now
       sf.save!
       return sf
     end

@@ -1,5 +1,5 @@
 class SpotFeedsController < ApplicationController
-  before_action :set_spot_feed, only: [:show, :edit, :update, :destroy]
+  before_action :set_spot_feed, only: [:show, :edit, :update, :destroy, :import]
 
   def index
     @spot_feeds = SpotFeed.all
@@ -32,6 +32,11 @@ class SpotFeedsController < ApplicationController
   def destroy
     @spot_feed.destroy
     respond_with(@spot_feed)
+  end
+
+  def import
+    Importer.new(spot_feed: @spot_feed).import
+    redirect_to spot_feed_path(@spot_feed.reload), notice: 'Import complete'
   end
 
   private
