@@ -11,6 +11,7 @@ longitude ""
 model_id ""
 show_custom_msg ""
 date_time ""
+battery_state ""
 hidden ""
 message_content "MyString"
   end

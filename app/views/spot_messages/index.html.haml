@@ -13,6 +13,7 @@
     %th Model
     %th Show custom msg
     %th Date time
+    %th Batter State
     %th Hidden
     %th Message content
     %th
@@ -31,7 +32,8 @@
       %td= spot_message.longitude
       %td= spot_message.model_id
       %td= spot_message.show_custom_msg
-      %td= spot_message.date_time
+      %td= spot_message.date_time.to_s(:short)
+      %td= spot_message.battery_state
       %td= spot_message.hidden
       %td= spot_message.message_content
       %td= link_to 'Show', spot_message

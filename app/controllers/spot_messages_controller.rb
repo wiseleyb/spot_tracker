@@ -40,6 +40,10 @@ class SpotMessagesController < ApplicationController
     end
 
     def spot_message_params
-      params.require(:spot_message).permit(:spot_feed_id, :spot_id, :messenger_id, :messenger_name, :unix_time, :message_type, :latitude, :longitude, :model_id, :show_custom_msg, :date_time, :hidden, :message_content)
+      params.require(:spot_message).permit(
+        :spot_feed_id, :spot_id, :messenger_id, :messenger_name,
+        :unix_time, :message_type, :latitude, :longitude, :model_id,
+        :show_custom_msg, :date_time, :batter_state, :hidden,
+        :message_content)
     end
 end

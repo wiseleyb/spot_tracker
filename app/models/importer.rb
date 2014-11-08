@@ -106,6 +106,7 @@ class Importer
         sm.model_id = get_text(msg, 'modelId')
         sm.show_custom_msg = get_text(msg, 'showCustomMsg')
         sm.date_time = DateTime.parse(get_text(msg, 'dateTime'))
+        sm.battery_state = get_text(msg, 'batteryState')
         sm.hidden = get_text(msg, 'hidden').to_i
         sm.message_content = get_text(msg, 'messageContent')
         sm.save!

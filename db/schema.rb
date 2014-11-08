@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107150742) do
+ActiveRecord::Schema.define(version: 20141108191448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20141107150742) do
     t.string   "message_content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "battery_state"
   end
 
   add_index "spot_messages", ["spot_feed_id"], name: "index_spot_messages_on_spot_feed_id", using: :btree
