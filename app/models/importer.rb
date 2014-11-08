@@ -50,7 +50,7 @@ class Importer
     end
 
     def load_url(url)
-      Nokogiri::HTML(open(url))
+      Nokogiri::XML(open(url))
     end
   end
 
@@ -125,7 +125,7 @@ class Importer
   end
 
   def get_text(doc, field)
-    doc.xpath(field.downcase).first.try(:text)
+    doc.xpath(field).first.try(:text)
   end
 
   def error?

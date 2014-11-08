@@ -2,7 +2,8 @@ class SpotFeed < ActiveRecord::Base
   has_many :spot_messages, dependent: :destroy
 
   scope :syncable, -> {
-    where(sync: true).where('updated_at < ?', 5.minutes.ago)
+    where(sync: true).where('updated_at < ? OR created_at = updated_at',
+                            5.minutes.ago)
   }
 
   def feed_url
