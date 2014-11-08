@@ -1,3 +1,11 @@
+Nokogiri on Yosemite
+
+brew unlink gcc-4.2      # you might not need this step
+gem uninstall nokogiri
+xcode-select --install
+gem install nokogiri
+
+from http://stackoverflow.com/questions/24091869/installing-nokogiri-on-osx-10-10-yosemite
 Spot Tracker
 ================
 
