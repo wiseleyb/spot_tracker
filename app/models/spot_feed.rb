@@ -11,26 +11,12 @@ class SpotFeed < ActiveRecord::Base
     "public/feed/#{feed_id}/message.xml"
   end
 
-  def markers_json
-    Gmaps4rails.build_markers spot_messages.mappable do |msg, marker|
-      marker.lat msg.latitude.to_f
-      marker.lng msg.longitude.to_f
-      #marker.infowindow render_to_string(:partial => "/users/my_template", :locals => { :object => user}).gsub(/\n/, '').gsub(/"/, '\"')
-#      marker.picture({
-#        url: 'https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png',
-#        width: 16,
-#        height: 16
-#      })
-      marker.title   "i'm the title"
-      marker.json({ :id => msg.id })
-    end.to_json.html_safe
-  end
-
-  def path_json
+  def to_json
     spot_messages.mappable.map do |m|
       {
         lat: m.latitude,
-        lng: m.longitude
+        lng: m.longitude,
+        title: "#{m.message_type}: #{m.date_time}"
       }
     end.to_json.html_safe
   end

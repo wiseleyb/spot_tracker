@@ -1,3 +1,8 @@
+<style>
+  #map label { width: auto; display:inline; }
+  #map img { max-width: none; }
+</style>
+
 <h3>Welcome</h3>
 <p><%= link_to 'Users:', users_path %> <%= User.count %> registered</p>
 
@@ -6,55 +11,56 @@
 </div>
 
 <script>
-  /*
-  var line = new google.maps.Polyline({
-    path: [new google.maps.LatLng(37.4419, -122.1419),
-           new google.maps.LatLng(37.4519, -122.1519)],
-    strokeColor: "#FF0000",
-    strokeOpacity: 1.0,
-    strokeWeight: 10,
-    geodesic: true
-  });
-  handler = Gmaps.build('Google');
-  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-    markers = handler.addMarkers(<%=SpotFeed.first.markers_json%>);
-    handler.addPolyline(line);
-    handler.bounds.extendWith(markers);
-    handler.fitMapToBounds();
-  });
-  */
   <% sf = SpotFeed.last %>
-  <% messages = sf.spot_messages.mappable %>
+
   function initialize() {
+    var json = $.parseJSON('<%= sf.to_json %>');
+
     var mapOptions = {
-      zoom: 8,
-      center: new google.maps.LatLng(<%= messages.first.latitude %>,
-                                     <%= messages.first.longitude %>),
       mapTypeId: google.maps.MapTypeId.TERRAIN
     };
 
-    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    var json = '<%= sf.path_json %>';
-    var pathCoordinates = [];
-    $.each($.parseJSON(json), function(idx, obj) {
+    var map = new google.maps.Map(document.getElementById('map'), mapOptions),
+        pathCoordinates = [],
+        bounds = new google.maps.LatLngBounds(),
+        infowindow = new google.maps.InfoWindow();
+
+    // Create path
+    $.each(json, function(idx, obj) {
       pathCoordinates.push(new google.maps.LatLng(obj.lat, obj.lng));
     });
-    /*
-      new google.maps.LatLng(37.772323, -122.214897),
-      new google.maps.LatLng(21.291982, -157.821856),
-      new google.maps.LatLng(-18.142599, 178.431),
-      new google.maps.LatLng(-27.46758, 153.027892)
-      ];
-      */
-    var flightPath = new google.maps.Polyline({
+
+    new google.maps.Polyline({
       path: pathCoordinates,
       geodesic: true,
       strokeColor: '#FF0000',
       strokeOpacity: 1.0,
-      strokeWeight: 2
+      strokeWeight: 2,
+      map: map
+    });
+    // mapPath.setMap(map);
+
+    // Create markers
+    $.each(json, function(idx, obj) {
+      var marker = new google.maps.Marker({
+        map: map,
+        position: new google.maps.LatLng(obj.lat, obj.lng),
+        title: obj.marker_title
+      });
+
+      bounds.extend(marker.position);
+
+      google.maps.event.addListener(marker, 'click', (function(marker, idx) {
+        return function() {
+          infowindow.setContent(obj.title);
+          infowindow.open(map, marker);
+        }
+      })(marker, idx));
+
     });
 
-    flightPath.setMap(map);
+    // Zoom to markers
+    map.fitBounds(bounds);
   }
 
   google.maps.event.addDomListener(window, 'load', initialize);
