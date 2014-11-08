@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<response>
+  <feedMessageResponse>
+    <count>8</count>
+    <feed>
+      <id>01DGNHRHJnXaSt8C7naZb3GbI6nWJ3uOi</id>
+      <name>ben-hobie-tandem-island</name>
+      <description>ben-hobie-tandem-island</description>
+      <status>ACTIVE</status>
+      <usage>0</usage>
+      <daysRange>7</daysRange>
+      <detailedMessageShown>true</detailedMessageShown>
+    </feed>
+    <totalCount>8</totalCount>
+    <activityCount>0</activityCount>
+    <messages>
+      <message clientUnixTime="0">
+        <id>338746196</id>
+        <messengerId>0-2536646</messengerId>
+        <messengerName>BenSpot</messengerName>
+        <unixTime>1415407923</unixTime>
+        <messageType>UNLIMITED-TRACK</messageType>
+        <latitude>37.73899</latitude>
+        <longitude>-122.41467</longitude>
+        <modelId>SPOTTRACE</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2014-11-08T00:52:03+0000</dateTime>
+        <batteryState>GOOD</batteryState>
+        <hidden>0</hidden>
+      </message>
+      <message clientUnixTime="0">
+        <id>338745045</id>
+        <messengerId>0-2536646</messengerId>
+        <messengerName>BenSpot</messengerName>
+        <unixTime>1415407622</unixTime>
+        <messageType>UNLIMITED-TRACK</messageType>
+        <latitude>37.73886</latitude>
+        <longitude>-122.41438</longitude>
+        <modelId>SPOTTRACE</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2014-11-08T00:47:02+0000</dateTime>
+        <batteryState>GOOD</batteryState>
+        <hidden>0</hidden>
+      </message>
+      <message clientUnixTime="0">
+        <id>338630997</id>
+        <messengerId>0-2536646</messengerId>
+        <messengerName>BenSpot</messengerName>
+        <unixTime>1415381260</unixTime>
+        <messageType>STOP</messageType>
+        <latitude>37.77886</latitude>
+        <longitude>-122.39754</longitude>
+        <modelId>SPOTTRACE</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2014-11-07T17:27:40+0000</dateTime>
+        <batteryState>GOOD</batteryState>
+        <hidden>0</hidden>
+      </message>
+      <message clientUnixTime="0">
+        <id>338631018</id>
+        <messengerId>0-2536646</messengerId>
+        <messengerName>BenSpot</messengerName>
+        <unixTime>1415380960</unixTime>
+        <messageType>STOP</messageType>
+        <latitude>37.77873</latitude>
+        <longitude>-122.39763</longitude>
+        <modelId>SPOTTRACE</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2014-11-07T17:22:40+0000</dateTime>
+        <batteryState>GOOD</batteryState>
+        <hidden>0</hidden>
+      </message>
+      <message clientUnixTime="0">
+        <id>338631019</id>
+        <messengerId>0-2536646</messengerId>
+        <messengerName>BenSpot</messengerName>
+        <unixTime>1415380660</unixTime>
+        <messageType>STOP</messageType>
+        <latitude>37.77899</latitude>
+        <longitude>-122.39746</longitude>
+        <modelId>SPOTTRACE</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2014-11-07T17:17:40+0000</dateTime>
+        <batteryState>GOOD</batteryState>
+        <hidden>0</hidden>
+      </message>
+      <message clientUnixTime="0">
+        <id>338624025</id>
+        <messengerId>0-2536646</messengerId>
+        <messengerName>BenSpot</messengerName>
+        <unixTime>1415379684</unixTime>
+        <messageType>UNLIMITED-TRACK</messageType>
+        <latitude>37.77446</latitude>
+        <longitude>-122.40456</longitude>
+        <modelId>SPOTTRACE</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2014-11-07T17:01:24+0000</dateTime>
+        <batteryState>GOOD</batteryState>
+        <hidden>0</hidden>
+      </message>
+      <message clientUnixTime="0">
+        <id>338622696</id>
+        <messengerId>0-2536646</messengerId>
+        <messengerName>BenSpot</messengerName>
+        <unixTime>1415379381</unixTime>
+        <messageType>NEWMOVEMENT</messageType>
+        <latitude>37.77127</latitude>
+        <longitude>-122.40852</longitude>
+        <modelId>SPOTTRACE</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2014-11-07T16:56:21+0000</dateTime>
+        <batteryState>GOOD</batteryState>
+        <hidden>0</hidden>
+        <messageContent> SPOT Trace has detected that the asset has moved.</messageContent>
+      </message>
+      <message clientUnixTime="0">
+        <id>338618627</id>
+        <messengerId>0-2536646</messengerId>
+        <messengerName>BenSpot</messengerName>
+        <unixTime>1415378516</unixTime>
+        <messageType>POWER-OFF</messageType>
+        <latitude>-99999.0</latitude>
+        <longitude>-99999.0</longitude>
+        <modelId>SPOTTRACE</modelId>
+        <showCustomMsg>Y</showCustomMsg>
+        <dateTime>2014-11-07T16:41:56+0000</dateTime>
+        <batteryState>GOOD</batteryState>
+        <hidden>0</hidden>
+        <messageContent>  Your SPOT Trace has been powered off.</messageContent>
+      </message>
+    </messages>
+  </feedMessageResponse>
+</response>
