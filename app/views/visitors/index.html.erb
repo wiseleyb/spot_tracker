@@ -6,77 +6,79 @@
 <h3>Welcome</h3>
 <p><%= link_to 'Users:', users_path %> <%= User.count %> registered</p>
 
-<div style='width: 100%;'>
-  <div id="map" style='width: 100%; height: 600px;'></div>
-</div>
+<% cache ["map", @spot_group] do %>
+  <div style='width: 100%;'>
+    <div id="map" style='width: 100%; height: 600px;'></div>
+  </div>
 
-<script>
-  <% sf = SpotFeed.last %>
+  <script>
+    <% sf = @spot_group.spot_feeds.last %>
 
-  function initialize() {
-    var json = $.parseJSON('<%= sf.to_json %>');
+    function initialize() {
+      var json = $.parseJSON('<%= sf.to_json %>');
 
-    var mapOptions = {
-      mapTypeId: google.maps.MapTypeId.TERRAIN
-    };
+      var mapOptions = {
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+      };
 
-    var map = new google.maps.Map(document.getElementById('map'), mapOptions),
-        pathCoordinates = [],
-        bounds = new google.maps.LatLngBounds(),
-        infowindow = new google.maps.InfoWindow();
+      var map = new google.maps.Map(document.getElementById('map'), mapOptions),
+          pathCoordinates = [],
+          bounds = new google.maps.LatLngBounds(),
+          infowindow = new google.maps.InfoWindow();
 
-    // Create path
-    $.each(json, function(idx, obj) {
-      if (idx > 0) {
-        p1 = new google.maps.LatLng(json[idx-1].lat, json[idx-1].lng);
-        p2 = new google.maps.LatLng(obj.lat, obj.lng);
+      // Create path
+      $.each(json, function(idx, obj) {
+        if (idx > 0) {
+          p1 = new google.maps.LatLng(json[idx-1].lat, json[idx-1].lng);
+          p2 = new google.maps.LatLng(obj.lat, obj.lng);
 
-        var path = new google.maps.Polyline({
-          path: [p1, p2],
-          geodesic: true,
-          strokeColor: '#FF0000',
-          strokeOpacity: 1.0,
-          strokeWeight: 2,
-          map: map
-        });
+          var path = new google.maps.Polyline({
+            path: [p1, p2],
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map
+          });
 
-        createInfoWindow(path, obj.line_info);
-      }
-    });
-
-    function createInfoWindow(poly,content) {
-      google.maps.event.addListener(poly, 'click', function(event) {
-        infowindow.close();
-        infowindow = new google.maps.InfoWindow({
-          position: event.latLng,
-          content: content
-        });
-        infowindow.open(map);
+          createInfoWindow(path, obj.line_info);
+        }
       });
+
+      function createInfoWindow(poly,content) {
+        google.maps.event.addListener(poly, 'click', function(event) {
+          infowindow.close();
+          infowindow = new google.maps.InfoWindow({
+            position: event.latLng,
+            content: content
+          });
+          infowindow.open(map);
+        });
+      }
+
+      // Create markers
+      $.each(json, function(idx, obj) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: new google.maps.LatLng(obj.lat, obj.lng),
+          title: obj.marker_title
+        });
+
+        bounds.extend(marker.position);
+
+        google.maps.event.addListener(marker, 'click', (function(marker, idx) {
+          return function() {
+            infowindow.setContent(obj.title);
+            infowindow.open(map, marker);
+          }
+        })(marker, idx));
+
+      });
+
+      // Zoom to markers
+      map.fitBounds(bounds);
     }
 
-    // Create markers
-    $.each(json, function(idx, obj) {
-      var marker = new google.maps.Marker({
-        map: map,
-        position: new google.maps.LatLng(obj.lat, obj.lng),
-        title: obj.marker_title
-      });
-
-      bounds.extend(marker.position);
-
-      google.maps.event.addListener(marker, 'click', (function(marker, idx) {
-        return function() {
-          infowindow.setContent(obj.title);
-          infowindow.open(map, marker);
-        }
-      })(marker, idx));
-
-    });
-
-    // Zoom to markers
-    map.fitBounds(bounds);
-  }
-
-  google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+<% end # cache %>
