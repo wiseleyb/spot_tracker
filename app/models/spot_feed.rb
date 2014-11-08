@@ -1,4 +1,5 @@
 class SpotFeed < ActiveRecord::Base
+  belongs_to :spot_group, touch: true
   has_many :spot_messages, dependent: :destroy
 
   scope :syncable, -> {

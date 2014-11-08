@@ -73,14 +73,15 @@ class Importer
     feed = @xdoc.xpath('//feed').first
     if feed
       feed_id = get_text(feed, 'id')
-      sf = SpotFeed.where(feed_id: feed_id).first_or_initialize
+      sf = SpotFeed.where(spot_group_id: SpotGroup.first.id,
+                          feed_id: feed_id).first_or_initialize
       sf.name = get_text(feed, 'name')
       sf.description = get_text(feed, 'description')
       sf.status = get_text(feed, 'status')
       sf.usage = get_text(feed, 'usage').to_i
       sf.days_range = get_text(feed, 'daysRange')
       sf.detailed_message_shown = get_text(feed, 'detailedMessageShown') == 'true'
-      sf.updated_at = Time.now
+      #sf.updated_at = Time.now
       sf.save!
       return sf
     end

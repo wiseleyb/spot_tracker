@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :spot_feed do
+    spot_group_id ""
     feed_id ""
     name ""
     description ""

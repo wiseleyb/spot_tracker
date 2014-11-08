@@ -1,0 +1,13 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @spot_group.name
+
+%p
+  %b Updated:
+  = @spot_group.updated_at.to_s(:short)
+
+= link_to 'Edit', edit_spot_group_path(@spot_group)
+\|
+= link_to 'Back', spot_groups_path

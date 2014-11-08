@@ -1,0 +1,21 @@
+%h1 Listing spot_groups
+
+%table
+  %tr
+    %th Name
+    %th Updated
+    %th
+    %th
+    %th
+
+  - @spot_groups.each do |spot_group|
+    %tr
+      %td= spot_group.name
+      %td= spot_group.updated_at.to_s(:short)
+      %td= link_to 'Show', spot_group
+      %td= link_to 'Edit', edit_spot_group_path(spot_group)
+      %td= link_to 'Destroy', spot_group, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Spot group', new_spot_group_path

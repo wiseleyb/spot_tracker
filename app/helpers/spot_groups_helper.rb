@@ -1,0 +1,2 @@
+module SpotGroupsHelper
+end

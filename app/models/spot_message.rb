@@ -1,5 +1,5 @@
 class SpotMessage < ActiveRecord::Base
-  belongs_to :spot_feed
+  belongs_to :spot_feed, touch: true
 
   BAD_COORDINATES     = [-99999.0]
   BAD_MESSAGE_TYPES   = ['POWER-OFF', 'HELP-CANCEL']

@@ -47,6 +47,6 @@ class SpotFeedsController < ApplicationController
     def spot_feed_params
       params.require(:spot_feed).permit(:feed_id, :name, :description, :status,
                                         :usage, :days_range, :detailed_message_shown,
-                                        :sync, :sync_status)
+                                        :sync, :sync_status, :spot_group_id)
     end
 end

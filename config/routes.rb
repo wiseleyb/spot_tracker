@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :spot_groups
+
   resources :spot_feeds do
     member do
       get 'import'
