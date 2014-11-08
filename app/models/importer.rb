@@ -3,7 +3,7 @@ require 'open-uri'
 # Imports feeds from spot
 class Importer
 
-  attr_accessor :spot_feed, :xml, :xdoc, :url
+  attr_accessor :spot_feed, :xml, :xdoc, :url, :spot_message_ids
 
   def initialize(spot_feed: nil, xml: nil, url: nil)
     # TODO: clean this hackity hack crap up
@@ -11,9 +11,17 @@ class Importer
     @spot_feed = spot_feed
     @xml = xml
     @url = url
+    @spot_message_ids = []
 
     if @spot_feed
       @xdoc = Importer.load_url(@spot_feed.feed_url)
+
+      # We collect these as an optimization so we reduce db
+      # hits when we get messages that have already been created
+      @spot_message_ids = SpotMessage.
+        where(spot_feed_id: @spot_feed.id).
+        select(:spot_id).
+        pluck(:spot_id)
     end
 
     if @xml
@@ -97,6 +105,7 @@ class Importer
       res = []
       messages.each do |msg|
         spot_id = get_text(msg, 'id').to_i
+        next if @spot_message_ids.include?(spot_id)
         sm = SpotMessage.where(spot_id: spot_id).first_or_initialize
         sm.spot_feed_id = sf.id
         sm.messenger_id = get_text(msg, 'messengerId')
