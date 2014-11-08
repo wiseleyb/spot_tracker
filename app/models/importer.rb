@@ -35,7 +35,7 @@ class Importer
   class << self
     def import_feeds
       SpotFeed.syncable.each do |sf|
-        Importer.new(spot_feed: sf).import #rescue 'Import failed'
+        Importer.new(spot_feed: sf).import rescue 'Import failed'
         sf.update_attributes(sync_status: 'SUCCESS')
         sleep 5 # required by spot api
       end
