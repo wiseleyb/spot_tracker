@@ -12,13 +12,28 @@ class SpotFeed < ActiveRecord::Base
   end
 
   def to_json
-    spot_messages.mappable.map do |m|
-      {
+    json = []
+    messages = spot_messages.mappable
+    messages.each_with_index do |m, idx|
+      h = {
         lat: m.latitude,
         lng: m.longitude,
-        title: "#{m.message_type}: #{m.date_time}"
+        title: "#{m.message_type}: #{m.date_time}",
+        line_info: ''
       }
-    end.to_json.html_safe
+      if idx > 0
+        arr = []
+        m1 = messages[idx - 1]
+        arr << "Distance: #{m1.distance_to(m).round(2)} miles"
+        arr << "Speed: #{m1.speed_to(m).round(2)} mph"
+        arr << "Time: #{(m1.seconds_to(m)/60).round(2)} minutes"
+        arr << "Heading: #{m1.compass_point_to(m)} #{m1.heading_to(m).to_i}"
+        arr << "On: #{m1.date_time.to_s(:short)}"
+        h[:line_info] = arr.join('<br/>')
+      end
+      json << h
+    end
+    json.to_json.html_safe
   end
 
   def test_large_json

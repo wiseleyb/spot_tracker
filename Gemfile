@@ -16,6 +16,8 @@ gem 'simple_form'
 gem 'thin'
 gem 'upmin-admin'
 
+gem 'geocoder'
+gem 'geokit'
 gem 'gmaps4rails'
 gem 'nokogiri'
 gem 'pg'

@@ -27,18 +27,33 @@
 
     // Create path
     $.each(json, function(idx, obj) {
-      pathCoordinates.push(new google.maps.LatLng(obj.lat, obj.lng));
+      if (idx > 0) {
+        p1 = new google.maps.LatLng(json[idx-1].lat, json[idx-1].lng);
+        p2 = new google.maps.LatLng(obj.lat, obj.lng);
+
+        var path = new google.maps.Polyline({
+          path: [p1, p2],
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2,
+          map: map
+        });
+
+        createInfoWindow(path, obj.line_info);
+      }
     });
 
-    new google.maps.Polyline({
-      path: pathCoordinates,
-      geodesic: true,
-      strokeColor: '#FF0000',
-      strokeOpacity: 1.0,
-      strokeWeight: 2,
-      map: map
-    });
-    // mapPath.setMap(map);
+    function createInfoWindow(poly,content) {
+      google.maps.event.addListener(poly, 'click', function(event) {
+        infowindow.close();
+        infowindow = new google.maps.InfoWindow({
+          position: event.latLng,
+          content: content
+        });
+        infowindow.open(map);
+      });
+    }
 
     // Create markers
     $.each(json, function(idx, obj) {
