@@ -53,7 +53,6 @@
         // Legend
         // https://developers.google.com/maps/tutorials/customizing/adding-a-legend
 
-
         // Create markers
         var markers = [];
         $.each(messages, function(idx, obj) {
@@ -73,7 +72,8 @@
           var marker = new google.maps.Marker({
             map: map,
             position: new google.maps.LatLng(obj.lat, obj.lng),
-            icon: markImg
+            icon: markImg,
+            animation: google.maps.Animation.DROP
           });
 
           markers.push(marker);
