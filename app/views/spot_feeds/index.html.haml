@@ -13,6 +13,7 @@
     %th Detailed message shown
     %th Sync
     %th Sync Status
+    %th Display
     %th
     %th
     %th
@@ -30,6 +31,7 @@
       %td= spot_feed.detailed_message_shown
       %td= spot_feed.sync
       %td= spot_feed.sync_status
+      %td= spot_feed.display
       %td= link_to 'Show', spot_feed
       %td= link_to 'Edit', edit_spot_feed_path(spot_feed)
       %td= link_to 'Destroy', spot_feed, :method => :delete, :data => { :confirm => 'Are you sure?' }

@@ -6,6 +6,7 @@ class SpotFeed < ActiveRecord::Base
     where(sync: true).where('updated_at < ? OR created_at = updated_at',
                             5.minutes.ago)
   }
+  scope :display, -> { where(display: true) }
 
   def feed_url
     'https://api.findmespot.com/spot-main-web/consumer/rest-api/2.0/' +
