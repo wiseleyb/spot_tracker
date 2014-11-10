@@ -1,47 +1,72 @@
 %p#notice= notice
 
 %p
+  %b ID:
+  = @spot_message.id
+
+%p
   %b Spot feed:
   = @spot_message.spot_feed_id
+
 %p
   %b Spot:
   = @spot_message.spot_id
+
 %p
   %b Messenger:
   = @spot_message.messenger_id
+
 %p
   %b Messenger name:
   = @spot_message.messenger_name
+
 %p
   %b Unix time:
   = @spot_message.unix_time
+
 %p
   %b Message type:
   = @spot_message.message_type
+
 %p
   %b Latitude:
   = @spot_message.latitude
+
 %p
   %b Longitude:
   = @spot_message.longitude
+
 %p
   %b Model:
   = @spot_message.model_id
+
 %p
   %b Show custom msg:
   = @spot_message.show_custom_msg
+
 %p
   %b Date time:
   = @spot_message.date_time
+
 %p
   %b Battery State:
   = @spot_message.battery_state
+
 %p
   %b Hidden:
   = @spot_message.hidden
+
 %p
   %b Message content:
   = @spot_message.message_content
+
+%p
+  %b Created At
+  = @spot_feed.created_at.to_s(:short)
+
+%p
+  %b Updated At
+  = @spot_feed.updated_at.to_s(:short)
 
 = link_to 'Edit', edit_spot_message_path(@spot_message)
 \|

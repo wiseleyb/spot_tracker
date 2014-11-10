@@ -2,6 +2,7 @@
 
 %table
   %tr
+    %th ID
     %th Group
     %th Feed
     %th Name
@@ -18,6 +19,7 @@
 
   - @spot_feeds.each do |spot_feed|
     %tr
+      %td= spot_feed.id
       %td= spot_feed.spot_group.name
       %td= spot_feed.feed_id
       %td= spot_feed.name

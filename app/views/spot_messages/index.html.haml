@@ -2,6 +2,7 @@
 
 %table
   %tr
+    %th ID
     %th Spot feed
     %th Spot
     %th Messenger
@@ -22,6 +23,7 @@
 
   - @spot_messages.each do |spot_message|
     %tr
+      %td= spot_message.id
       %td= spot_message.spot_feed_id
       %td= spot_message.spot_id
       %td= spot_message.messenger_id
