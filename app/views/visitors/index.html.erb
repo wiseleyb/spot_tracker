@@ -1,6 +1,21 @@
 <style>
   #map label { width: auto; display:inline; }
   #map img { max-width: none; }
+
+  #legend {
+    background: white;
+    border: solid 1px black;
+    padding: 0px 10px 5px 10px;
+    text-align: left;
+  }
+
+  #legend img { display: inline; }
+
+  #legend h1 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 5px 0px 5px 0px;
+  }
 </style>
 
 <h3>Welcome</h3>
@@ -9,6 +24,9 @@
 <% cache ["map", @spot_group] do %>
   <div style='width: 100%;'>
     <div id="map" style='width: 100%; height: 600px;'></div>
+  </div>
+  <div id="legend">
+    <h1><%= @spot_group.name %></h1>
   </div>
 
   <script>
@@ -21,14 +39,27 @@
         mapTypeId: google.maps.MapTypeId.TERRAIN
       };
 
-      var map = new google.maps.Map(document.getElementById('map'), mapOptions),
+      var map = new google.maps.Map($('#map')[0], mapOptions),
           pathCoordinates = [],
           bounds = new google.maps.LatLngBounds(),
           infowindow = new google.maps.InfoWindow();
 
+      // Legend
+      // https://developers.google.com/maps/tutorials/customizing/adding-a-legend
+      var legend = $('#legend')
+
       $.each(json, function(feed_id, feed) {
         var color = feed.color,
             messages = feed.messages;
+
+        // Legend
+        var div = $('<div></div>'),
+            chst = 'd_map_spin&chld=0.3|0|' + color + '|10|_|',
+            markImg = new google.maps.MarkerImage(
+                            'http://chart.apis.google.com/' +
+                            'chart?chst=' + chst),
+            html = '<div><img src="' + markImg.url + '"> ' + feed.name + '</div>'
+        legend.append(html);
 
         // Create path
         $.each(messages, function(idx, obj) {
@@ -49,9 +80,6 @@
             createInfoWindow(path, obj.line_info);
           }
         });
-
-        // Legend
-        // https://developers.google.com/maps/tutorials/customizing/adding-a-legend
 
         // Create markers
         var markers = [];
@@ -91,6 +119,9 @@
         //group markers; page loads a lot faster when you have many markers
         var mc = new MarkerClusterer(map, markers);
       });
+
+      // Legend
+      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend[0]);
 
       function createInfoWindow(poly, content) {
         google.maps.event.addListener(poly, 'click', function(event) {
