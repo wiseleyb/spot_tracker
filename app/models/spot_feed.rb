@@ -8,11 +8,13 @@ class SpotFeed < ActiveRecord::Base
   }
   scope :displayable, -> { where(display: true) }
 
+  alias_method :messages, :spot_messages
+
   # Color sets
   # http://colorbrewer2.org/
   # http://www.colourlovers.com/palettes/most-loved/all-time/meta
   COLORS = %w(67001f b2182b d6604d f4a582 fddbc7 f7f7f7
-              d1e5f0 92c5de 4393c3 2166ac 053061)
+              d1e5f0 92c5de 4393c3 2166ac)
 
   def feed_url
     'https://api.findmespot.com/spot-main-web/consumer/rest-api/2.0/' +
