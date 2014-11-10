@@ -26,13 +26,14 @@ class SpotFeed < ActiveRecord::Base
       h = {
         lat: m.latitude,
         lng: m.longitude,
-        title: "#{m.message_type}: #{m.date_time}",
+        title: "#{self.display_name}: #{m.date_time}",
         line_info: '',
       }
 
       if idx > 0
         arr = []
         m1 = messages[idx - 1]
+        arr << self.display_name
         arr << "Distance: #{m1.distance_to(m).round(2)} miles"
         arr << "Speed: #{m1.speed_to(m).round(2)} mph"
         arr << "Time: #{(m1.seconds_to(m)/60).round(2)} minutes"

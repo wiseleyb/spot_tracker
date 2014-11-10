@@ -6,7 +6,8 @@ class SpotGroup < ActiveRecord::Base
       {
         color: SpotFeed::COLORS.reverse[idx],
         messages: sf.to_arr_for_json,
-        name: sf.name
+        name: sf.name,
+        display_name: sf.display_name
       }
     end
   end

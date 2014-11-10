@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110120332) do
+ActiveRecord::Schema.define(version: 20141110162650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20141110120332) do
     t.string   "sync_status"
     t.integer  "spot_group_id"
     t.boolean  "display"
+    t.string   "display_name"
   end
 
   add_index "spot_feeds", ["feed_id"], name: "index_spot_feeds_on_feed_id", unique: true, using: :btree

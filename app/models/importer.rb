@@ -84,6 +84,7 @@ class Importer
       sf = SpotFeed.where(spot_group_id: SpotGroup.first.id,
                           feed_id: feed_id).first_or_initialize
       sf.name = get_text(feed, 'name')
+      sf.display_name ||= sf.name
       sf.description = get_text(feed, 'description')
       sf.status = get_text(feed, 'status')
       sf.usage = get_text(feed, 'usage').to_i
