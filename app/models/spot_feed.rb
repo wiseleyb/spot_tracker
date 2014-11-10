@@ -6,14 +6,20 @@ class SpotFeed < ActiveRecord::Base
     where(sync: true).where('updated_at < ? OR created_at = updated_at',
                             5.minutes.ago)
   }
-  scope :display, -> { where(display: true) }
+  scope :displayable, -> { where(display: true) }
+
+  # Color sets
+  # http://colorbrewer2.org/
+  # http://www.colourlovers.com/palettes/most-loved/all-time/meta
+  COLORS = %w(67001f b2182b d6604d f4a582 fddbc7 f7f7f7
+              d1e5f0 92c5de 4393c3 2166ac 053061)
 
   def feed_url
     'https://api.findmespot.com/spot-main-web/consumer/rest-api/2.0/' +
     "public/feed/#{feed_id}/message.xml"
   end
 
-  def to_json
+  def to_arr_for_json
     json = []
     messages = spot_messages.mappable
     messages.each_with_index do |m, idx|
@@ -21,8 +27,9 @@ class SpotFeed < ActiveRecord::Base
         lat: m.latitude,
         lng: m.longitude,
         title: "#{m.message_type}: #{m.date_time}",
-        line_info: ''
+        line_info: '',
       }
+
       if idx > 0
         arr = []
         m1 = messages[idx - 1]
@@ -33,9 +40,10 @@ class SpotFeed < ActiveRecord::Base
         arr << "On: #{m1.date_time.to_s(:short)}"
         h[:line_info] = arr.join('<br/>')
       end
+
       json << h
     end
-    json.to_json.html_safe
+    json #.to_json.html_safe
   end
 
   def test_large_json
