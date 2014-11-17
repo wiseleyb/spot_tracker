@@ -1,7 +1,6 @@
 # For use with http://www.geomidpoint.com/random/
 class DataGenerator
   class << self
-
     # Take a csv of gps points from http://www.geomidpoint.com/random/
     # and add them to the system
     def create(csv)
@@ -27,13 +26,20 @@ class DataGenerator
       h
     end
 
+    def create_path_by_mph(min_max_hash:, feeds:, mph:)
+      steps = steps_by_mph(min_max_hash: min_max_hash,
+                           mph: mph)
+      create_path(min_max_hash: min_max_hash,
+                  feeds: feeds,
+                  steps: steps)
+    end
+
     def create_path(min_max_hash:,
                     feeds: nil,
-                    paths: 1,
-                    rnd: 3,
+                    rnd: 2,
                     steps: 10,
-                    steps_rnd: 3)
-      feeds = paths.times.map { create_feed } unless feeds
+                    steps_rnd: 1)
+      feeds ||= [create_feed]
       feeds = [feeds].flatten
       start_message_index ||= 1
       h = min_max_hash
@@ -41,16 +47,13 @@ class DataGenerator
       maxlat = h[:end][:lat]
       minlng = h[:start][:lng]
       maxlng = h[:end][:lng]
-      step_count = steps + rand(-steps_rnd..steps_rnd)
+      step_count = (steps + rand(-steps_rnd..steps_rnd)).to_i
       lat_step = diff(maxlat, minlat) / step_count
       lng_step = diff(maxlng, minlng) / step_count
       lat_step = (maxlat - minlat) / step_count
       lng_step = (maxlng - minlng) / step_count
-      puts "min/max", minlat, maxlat, minlng, maxlng
-      puts "steps", step_count, lat_step, lng_step
       SpotGroup.transaction do
-        paths.times do |path_step|
-puts "PATH: #{path_step}"
+        feeds.size.times do |path_step|
           feed = feeds[path_step]
           create_message(feed: feed,
                          lat: minlat,
@@ -63,7 +66,6 @@ puts "PATH: #{path_step}"
               minlng + (i * lng_step) + (lng_step * rand(0.1..rnd))
             ]
             msg_idx = (path_step * i) + i
-puts "MSG_IDX #{@@msg_counter}"
             create_message(feed: feed,
                            lat: coord[0],
                            lng: coord[1],
@@ -98,6 +100,29 @@ puts "MSG_IDX #{@@msg_counter}"
       )
     end
 
+    def steps_by_mph(min_max_hash:, mph:)
+      latlng_arr = geo_latlng(min_max_hash: min_max_hash)
+      distance = Geokit::LatLng.distance_between(latlng_arr.first,
+                                                 latlng_arr.last)
+      spot_update_frequency = 5 # minutes
+
+      # Time it takes to cover distance at speed times update_frequency
+      steps = ((distance.to_f / mph) * (60 / spot_update_frequency)).ceil
+
+      puts "Distance: #{distance}"
+      puts "Steps: #{steps}"
+
+      steps
+    end
+
+    def geo_latlng(min_max_hash:)
+      h = min_max_hash
+      [
+        Geokit::LatLng.new(h[:start][:lat], h[:start][:lng]),
+        Geokit::LatLng.new(h[:end][:lat],   h[:end][:lng])
+      ]
+    end
+
     def load_r2ak(racers: 5)
       @@msg_counter = 0
       points = r2ak_points
@@ -115,7 +140,7 @@ puts "MSG_IDX #{@@msg_counter}"
             start: { lat: points[idx].first, lng: points[idx].last },
             end: { lat: p.first, lng: p.last }
           }
-          create_path(min_max_hash: h, feeds: feed)
+          create_path_by_mph(min_max_hash: h, feeds: feed, mph: 5)
         end
       end
     end
@@ -133,6 +158,7 @@ puts "MSG_IDX #{@@msg_counter}"
        'Discovery',
        'Sea Runner']
     end
+
     def r2ak_points
       CSV.parse(%(48.112524, -122.752904
         48.240673, -123.097085
