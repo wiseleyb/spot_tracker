@@ -1,0 +1,11 @@
+%h1 Spot Group Maps
+
+%p
+  = link_to 'Users:', users_path
+  #{User.count} registered
+
+%h2 Groups
+%ul
+  - @groups.each do |group|
+    %li
+      = link_to group.name, group_path(group)

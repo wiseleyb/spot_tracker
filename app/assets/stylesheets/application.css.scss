@@ -13,3 +13,37 @@
  *= require_tree .
  *= require_self
  */
+#map {
+  height: 600px;
+  width: 100%;
+
+  img {
+    max-width: none;
+  }
+
+  label {
+    width: auto;
+    display:inline;
+  }
+}
+
+.maps-div {
+  width: 100%;
+}
+
+#legend {
+  background: white;
+  border: solid 1px black;
+  padding: 0px 10px 5px 10px;
+  text-align: left;
+
+  h1 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 5px 0px 5px 0px;
+  }
+
+  img {
+    display: inline;
+  }
+}

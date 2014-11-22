@@ -1,39 +1,20 @@
-<style>
-  #map label { width: auto; display:inline; }
-  #map img { max-width: none; }
+:css
 
-  #legend {
-    background: white;
-    border: solid 1px black;
-    padding: 0px 10px 5px 10px;
-    text-align: left;
-  }
+%h1= link_to @group.name, group_path(@group)
 
-  #legend img { display: inline; }
+= cache ["map", @spot_group] do
+  .maps-div
+    #map
 
-  #legend h1 {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 5px 0px 5px 0px;
-  }
-</style>
+  #legend
+    %h1= @group.name
 
-<h3>Welcome</h3>
-<p><%= link_to 'Users:', users_path %> <%= User.count %> registered</p>
+  :ruby
+    json = @group.to_arr_for_json.to_json.html_safe
 
-<% cache ["map", @spot_group] do %>
-  <div style='width: 100%;'>
-    <div id="map" style='width: 100%; height: 600px;'></div>
-  </div>
-  <div id="legend">
-    <h1><%= @spot_group.name %></h1>
-  </div>
-
-  <script>
-    <% json = @spot_group.to_arr_for_json.to_json.html_safe %>
-
+  :javascript
     function initialize() {
-      var json = $.parseJSON('<%= json %>');
+      var json = $.parseJSON('#{json}');
 
       var mapOptions = {
         mapTypeId: google.maps.MapTypeId.TERRAIN
@@ -138,7 +119,4 @@
       map.fitBounds(bounds);
     }
 
-
     google.maps.event.addDomListener(window, 'load', initialize);
-  </script>
-<% end # cache %>
