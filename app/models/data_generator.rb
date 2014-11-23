@@ -124,7 +124,7 @@ class DataGenerator
       ]
     end
 
-    def load_r2ak(racers: 5)
+    def load_r2ak(racers: 5, mph: 4)
       @@msg_counter = {}
       points = r2ak_points
 
@@ -141,7 +141,7 @@ class DataGenerator
             start: { lat: points[idx].first, lng: points[idx].last },
             end: { lat: p.first, lng: p.last }
           }
-          create_path_by_mph(min_max_hash: h, feeds: feed, mph: 5)
+          create_path_by_mph(min_max_hash: h, feeds: feed, mph: mph)
         end
       end
     end
