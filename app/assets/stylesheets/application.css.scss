@@ -13,8 +13,24 @@
  *= require_tree .
  *= require_self
  */
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0
+}
+
+.maps-container {
+  height: 100%;
+  width: 100%;
+}
+
 #map {
-  height: 600px;
+  height: 500px;
   width: 100%;
 
   img {
@@ -25,10 +41,6 @@
     width: auto;
     display:inline;
   }
-}
-
-.maps-div {
-  width: 100%;
 }
 
 #legend {
@@ -45,5 +57,23 @@
 
   img {
     display: inline;
+  }
+}
+
+.point-dates {
+
+  .date-column-header,
+  .date-column {
+    font-size: .7em;
+    text-align: center;
+  }
+  .date-column {
+    border: 1px solid black;
+    padding: 2px;
+    width: 15px;
+
+    &.selected {
+      background-color: white;
+    }
   }
 }

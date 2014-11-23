@@ -12,6 +12,8 @@ class SpotMessage < ActiveRecord::Base
               longitude:    BAD_COORDINATES)
   }
 
+  scope :by_date, -> (date) { where('date_time::date = ?', date) }
+
   alias_attribute :lat, :latitude
   alias_attribute :lng, :longitude
 
