@@ -55,10 +55,11 @@ class DataGenerator
       SpotGroup.transaction do
         feeds.size.times do |path_step|
           feed = feeds[path_step]
+          @@msg_counter[feed.id] ||= 0
           create_message(feed: feed,
                          lat: minlat,
                          lng: minlng,
-                         index: @@msg_counter += 1)
+                         index: @@msg_counter[feed.id] += 1)
           coords = []
           step_count.times do |i|
             coord = [
@@ -69,7 +70,7 @@ class DataGenerator
             create_message(feed: feed,
                            lat: coord[0],
                            lng: coord[1],
-                           index: @@msg_counter += 1)
+                           index: @@msg_counter[feed.id] += 1)
           end
         end
       end
@@ -124,7 +125,7 @@ class DataGenerator
     end
 
     def load_r2ak(racers: 5)
-      @@msg_counter = 0
+      @@msg_counter = {}
       points = r2ak_points
 
       feeds = racers.times.map { create_feed }
