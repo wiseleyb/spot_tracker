@@ -21,12 +21,18 @@ class SpotFeed < ActiveRecord::Base
     "public/feed/#{feed_id}/message.xml"
   end
 
-  def to_arr_for_json(date: nil)
+  def to_arr_for_json(date: nil, feed_id: nil)
     json = []
     messages = spot_messages.mappable
+
     if date
       messages = messages.by_date(date)
     end
+
+    if feed_id
+      messages = messages.by_feed(feed_id)
+    end
+
     messages.each_with_index do |m, idx|
       h = {
         lat: m.latitude,

@@ -77,3 +77,16 @@ body {
     }
   }
 }
+
+.feed-filters tr td {
+  border: 1px solid black;
+  padding: 2px;
+
+  &.selected {
+    background-color: white;
+  }
+}
+
+.filter-label {
+  width: 80px;
+}

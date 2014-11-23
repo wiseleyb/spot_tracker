@@ -13,6 +13,7 @@ class SpotMessage < ActiveRecord::Base
   }
 
   scope :by_date, -> (date) { where('date_time::date = ?', date) }
+  scope :by_feed, -> (feed_id) { where(spot_feed_id: feed_id) }
 
   alias_attribute :lat, :latitude
   alias_attribute :lng, :longitude

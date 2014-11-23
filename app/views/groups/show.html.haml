@@ -1,23 +1,27 @@
-%h1
-  = link_to @group.name, group_path(@group)
-  = params[:date]
-
-= cache ["map", @group, params[:date]] do
+= cache ["map", @group, params[:date], params[:feed_id]] do
   :ruby
     # we do this outside the controller for caching reasons
-    json = @group.to_arr_for_json(date: params[:date]).to_json.html_safe
+    json = @group.to_arr_for_json(
+      date: params[:date],
+      feed_id: params[:feed_id]).to_json.html_safe
     messages = @group.spot_feeds.map(&:spot_messages).flatten
     years = messages.group_by { |msg| msg.date_time.to_date.year }
 
+  %h1
+    = link_to @group.name, group_path(@group)
+    = params[:date]
+    = @group.spot_feeds.where(id: params[:feed_id]).first.display_name if params[:feed_id]
+
+  %h3 Filters
   %table.point-dates
     %tr.point-date-header-row
-      %th Filters
+      %th.filter-label
       - 31.times do |day|
         %th.date-column-header= day + 1
     - years.each do |ykey, year|
       - year.group_by { |msg| msg.date_time.to_date.month }.each do |mkey, months|
         %tr.point-date-row
-          %td= [ykey, mkey].join('-')
+          %th= [ykey, mkey].join('-')
           - data = months.group_by { |msg| msg.date_time.to_date.day }
           - 31.times do |day|
             - date = [ykey, mkey, day + 1].join('-')
@@ -25,6 +29,14 @@
               - if data[day + 1]
                 = link_to data[day+1].size,
                   group_path(@group, date: date)
+
+  %table.feed-filters
+    %tr
+      %th.filter-label= @group.name
+      - @group.spot_feeds.displayable.each do |feed|
+        %td{ class: "#{'selected' if params[:feed_id] == feed.id}" }
+          = link_to feed.display_name,
+            group_path(@group, date: params[:date], feed_id: feed.id)
 
   %p
     = link_to 'Clear Filters', group_path(@group)
