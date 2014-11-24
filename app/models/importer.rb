@@ -81,8 +81,8 @@ class Importer
     feed = @xdoc.xpath('//feed').first
     if feed
       feed_id = get_text(feed, 'id')
-      sf = SpotFeed.where(spot_group_id: SpotGroup.first.id,
-                          feed_id: feed_id).first_or_initialize
+      sf = SpotFeed.where(feed_id: feed_id).first_or_initialize
+      sf.spot_group_id ||= SpotGroup.first.id
       sf.name = get_text(feed, 'name')
       sf.display_name ||= sf.name
       sf.description = get_text(feed, 'description')
