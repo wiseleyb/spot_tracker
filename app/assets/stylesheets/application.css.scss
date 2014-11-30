@@ -78,15 +78,15 @@ body {
   }
 }
 
-.feed-filters tr td {
-  border: 1px solid black;
-  padding: 2px;
-
-  &.selected {
-    background-color: white;
-  }
+.filters {
+  margin-bottom: 10px;
 }
 
-.filter-label {
-  width: 80px;
+.filters th {
+  padding: 0 5px;
+}
+
+.filters td {
+  border: solid 1px black;
+  padding: 5px;
 }

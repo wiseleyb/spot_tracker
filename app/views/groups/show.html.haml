@@ -1,45 +1,46 @@
-= cache ["map", @group, params[:date], params[:feed_id]] do
+= cache ["map", @group, params[:date], params[:days], params[:feed_id]] do
   :ruby
     # we do this outside the controller for caching reasons
     json = @group.to_arr_for_json(
       date: params[:date],
-      feed_id: params[:feed_id]).to_json.html_safe
-    messages = @group.spot_feeds.map(&:spot_messages).flatten
-    years = messages.group_by { |msg| msg.date_time.to_date.year }
+      days: params[:days],
+      feed_id: params[:feed_id]
+    ).to_json.html_safe
+
+    message_dates = @group.message_dates
 
   %h1
     = link_to @group.name, group_path(@group)
     = params[:date]
-    = @group.spot_feeds.where(id: params[:feed_id]).first.display_name if params[:feed_id]
+    - unless params[:feed_id].blank?
+      = SpotFeed.where(id: params[:feed_id]).first.try(:display_name)
 
-  %h3 Filters
-  %table.point-dates
-    %tr.point-date-header-row
-      %th.filter-label
-      - 31.times do |day|
-        %th.date-column-header= day + 1
-    - years.each do |ykey, year|
-      - year.group_by { |msg| msg.date_time.to_date.month }.each do |mkey, months|
-        %tr.point-date-row
-          %th= [ykey, mkey].join('-')
-          - data = months.group_by { |msg| msg.date_time.to_date.day }
-          - 31.times do |day|
-            - date = [ykey, mkey, day + 1].join('-')
-            %td.date-column{ class: "#{'selected' if params[:date] == date}" }
-              - if data[day + 1]
-                = link_to data[day+1].size,
-                  group_path(@group, date: date)
-
-  %table.feed-filters
-    %tr
-      %th.filter-label= @group.name
-      - @group.spot_feeds.displayable.each do |feed|
-        %td{ class: "#{'selected' if params[:feed_id] == feed.id}" }
-          = link_to feed.display_name,
-            group_path(@group, date: params[:date], feed_id: feed.id)
-
-  %p
-    = link_to 'Clear Filters', group_path(@group)
+  .filters
+    = form_tag(group_path(@group), method: :get) do
+      %table
+        %tr
+          %th Filters
+          %th Date
+          %th Days
+          %th= @group.name
+          %th
+        %tr
+          %td= link_to 'Clear', group_path(@group)
+          %td
+            = select_tag :date,
+              options_for_select(message_dates, params[:date]),
+              include_blank: true
+          %td
+            = select_tag :days,
+              options_for_select(1..10, params[:days]),
+              include_blank: true
+          %td
+            = select_tag :feed_id,
+              options_from_collection_for_select([SpotFeed.new] + @group.spot_feeds.displayable,
+                :id,
+                :display_name,
+                params[:feed_id])
+          %td= submit_tag 'Filter'
 
   .maps-container
     #map
